@@ -2,7 +2,9 @@
 Safe app configuration from environment variables without extra dependencies
 
 # Install
+```
 pip install envvarconf
+```
 
 # Example
 Define our settings
