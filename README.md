@@ -1,4 +1,5 @@
 # envvarconf
+Safe app configuration from environment variables without extra dependencies
 
 # Example
 Define our settings
