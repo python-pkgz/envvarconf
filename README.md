@@ -63,4 +63,3 @@ $ EVC_SENTRY_DSN=testing EVC_HOST=localhost EVC_PORT=80 python3 main.py
 OK!
 <Settings SENTRY_DSN=testing, LOGGING_LEVEL=debug, HOST=localhost, PORT=80>
 ```
-# envvarconf
