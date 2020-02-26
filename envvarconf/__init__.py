@@ -60,7 +60,7 @@ class BaseSettings:
             if envvarname in os.environ:
                 self.set_var(varname, raw_value=os.environ[envvarname], vartype=vartype)
 
-    def load(self):
+    def load(self, failfast=True):
         self.validate_definition()
         self.load_from_env()
 
@@ -69,7 +69,9 @@ class BaseSettings:
             print("There is errors in settings")
             print("\n".join([f" * {x}" for x in errors]))
             print()
-            self.print_help_then_exit()
+
+            if failfast:
+                self.print_help_then_exit()
 
     def print_detailed(self, truncate_width: Optional[int] = None):
         if truncate_width is None:
