@@ -1,4 +1,6 @@
 # envvarconf
+![Python application](https://github.com/a1fred/envvarconf/workflows/Python%20application/badge.svg?branch=master)
+
 Safe app configuration from environment variables without extra dependencies
 
 # Install
