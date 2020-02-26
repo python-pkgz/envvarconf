@@ -1,8 +1,8 @@
 import os
 import sys
+import shutil
 from decimal import Decimal
-from typing import Type, Dict, List
-
+from typing import Type, Dict, List, Optional
 
 ALLOWED_TYPES = [
     str,
@@ -10,6 +10,17 @@ ALLOWED_TYPES = [
     float,
     Decimal,
 ]
+
+
+def truncatestring(string: str, width=30, placeholder="...") -> str:
+    # https://stackoverflow.com/questions/2872512/python-truncate-a-long-string/39017530
+    width -= len(placeholder)
+    assert width > 0
+    return (string[:width] + placeholder) if len(string) > width else string
+
+
+def get_tty_width(default=80) -> int:
+    return shutil.get_terminal_size((default, 20)).columns
 
 
 class BaseSettings:
@@ -60,18 +71,24 @@ class BaseSettings:
             print()
             self.print_help_then_exit()
 
-    def print_detailed(self):
+    def print_detailed(self, truncate_width: Optional[int] = None):
+        if truncate_width is None:
+            truncate_width = get_tty_width()
+
         print(f"{self.appname or 'Application'} settings:")
 
         for varname, vartype in self.get_annotations().items():
             envvarname = self.construct_envvarname(varname)
 
             if hasattr(self, varname):
-                varval = getattr(self, varname)
+                varval = str(getattr(self, varname))
             else:
                 varval = "NOT DEFINED!"
 
-            print(f"{varname}({envvarname}) {vartype} = {varval}")
+            print(truncatestring(
+                f"{varname}({envvarname}) {vartype} = {varval}",
+                width=truncate_width, placeholder="...")
+            )
 
     def print_help_then_exit(self):
         self.print_detailed()

@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     SENTRY_DSN: str
     LOGGING_LEVEL: str = 'debug'
 
-    HOST: str
+    HOST: str = "aaaakehgeiuhgiweurhiuerhf"*200
     PORT: int
 
 
