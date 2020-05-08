@@ -1,4 +1,5 @@
 from envvarconf import BaseSettings
+from envvarconf.loaders import environ
 
 
 class Settings(BaseSettings):
@@ -10,19 +11,19 @@ class Settings(BaseSettings):
 
 
 def test_settings_invalid():
-    settings = Settings(envvar_prefix="EVC_TEST", appname="evc_tests")
-    settings.load(failfast=False)
+    settings = Settings(appname="evc_tests")
+    settings.load(environ.Loader(), failfast=False)
     errors = settings.validation_errors()
     assert len(errors) == 2
     assert errors == ['SENTRY_DSN is not defined', 'PORT is not defined']
 
 
 def test_settings_valid(monkeypatch):
-    monkeypatch.setenv("EVC_TEST_SENTRY_DSN", "123")
-    monkeypatch.setenv("EVC_TEST_PORT", "123")
+    monkeypatch.setenv("SENTRY_DSN", "123")
+    monkeypatch.setenv("PORT", "123")
 
-    settings = Settings(envvar_prefix="EVC_TEST", appname="evc_tests")
-    settings.load()
+    settings = Settings(appname="evc_tests")
+    settings.load(environ.Loader())
     errors = settings.validation_errors()
     assert len(errors) == 0
     assert settings.SENTRY_DSN == "123"

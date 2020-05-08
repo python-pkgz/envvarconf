@@ -1,4 +1,5 @@
 from envvarconf import BaseSettings
+from envvarconf.loaders import environ
 
 
 class Settings(BaseSettings):
@@ -10,8 +11,8 @@ class Settings(BaseSettings):
 
 
 if __name__ == "__main__":
-    settings = Settings(envvar_prefix='EVC')
-    settings.load()
+    settings = Settings()
+    settings.load(loader=environ.Loader())
 
     print("OK!")
     print(settings)
