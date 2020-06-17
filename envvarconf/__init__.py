@@ -1,12 +1,10 @@
 import sys
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, List
 
-from envvarconf.constants import ALLOWED_TYPES
 from envvarconf.printing import get_tty_width, truncatestring
 from envvarconf.validation import validate_definition, validation_errors
 
-if TYPE_CHECKING:
-    from envvarconf.loaders.base import BaseLoader
+from envvarconf.loaders.base import BaseLoader
 
 
 class BaseSettings:
@@ -14,15 +12,17 @@ class BaseSettings:
         self.appname = appname
         validate_definition(self)
 
-    def load(self, loader: 'BaseLoader', failfast=True, truncate_width: Optional[int] = None):
+    def load(self, loaders: List[BaseLoader], failfast=True, truncate_width: Optional[int] = None):
         """
         Load settings using `loader`
 
-        :param loader: Loader instance, see `loaders` module
+        :param loaders: List of loaders instance, see `loaders` module
         :param truncate_width: Truncate output width, default using terminal width
         :param failfast: If settings is not valid print help then exit, else do nothing
         """
-        loader.load(self)
+
+        for loader in loaders:
+            loader.load(self)
 
         errors = validation_errors(self)
         if errors:

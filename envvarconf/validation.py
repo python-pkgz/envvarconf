@@ -1,6 +1,6 @@
 from typing import List
 
-from envvarconf import ALLOWED_TYPES
+from envvarconf.converters.base import ALLOWED_TYPES
 
 
 def validate_definition(settings):

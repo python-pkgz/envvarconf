@@ -1,6 +1,6 @@
 from setuptools import setup  # type: ignore
 
-version = '0.8'
+version = '1.0'
 
 
 setup(
@@ -13,7 +13,7 @@ setup(
     license='MIT',
     author='a1fred',
     author_email='demalf@gmail.com',
-    description='Show your coins portfolio',
+    description='Safe app configuration from environment variables without extra dependencies',
     classifiers=[
         'Environment :: Console',
         'Operating System :: POSIX :: Linux',
@@ -23,6 +23,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
     test_suite="tests",
 )

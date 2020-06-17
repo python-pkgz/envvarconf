@@ -1,21 +1,26 @@
-from typing import Type
+from typing import Type, Any, TYPE_CHECKING
 
-from envvarconf import BaseSettings, ALLOWED_TYPES
+from envvarconf.converters.base import ConverterBase, ALLOWED_TYPES
+
+
+if TYPE_CHECKING:
+    from envvarconf import BaseSettings
 
 
 class BaseLoader:
     """
     Abstract base loader class
     """
+    converter: ConverterBase = ConverterBase()
 
-    @staticmethod
-    def set_var(settings: BaseSettings, varname: str, raw_value: str, vartype: Type):
-        assert vartype in ALLOWED_TYPES, f"Wrong type for {varname}: {vartype}"
-        try:
-            varvalue = vartype(raw_value)
-        except ValueError as ex:
-            raise ValueError(f"There is error converting {varname}'s value '{raw_value}' to {vartype}'") from ex
-        setattr(settings, varname, varvalue)
+    @classmethod
+    def set_var(cls, settings: 'BaseSettings', varname: str, raw_value: Any, vartype: Type):
+        assert vartype in ALLOWED_TYPES, f"Variable {varname} marked {vartype}, that not allowed for settings use"
+        setattr(
+            settings,
+            varname,
+            cls.converter.convert(raw_value, vartype)
+        )
 
-    def load(self, settings: BaseSettings) -> BaseSettings:
+    def load(self, settings: 'BaseSettings') -> 'BaseSettings':
         raise NotImplementedError

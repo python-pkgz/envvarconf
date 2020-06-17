@@ -1,4 +1,4 @@
-from envvarconf import BaseSettings
+from envvarconf import BaseSettings, validation_errors
 from envvarconf.loaders import environ
 
 
@@ -12,8 +12,8 @@ class Settings(BaseSettings):
 
 def test_settings_invalid():
     settings = Settings(appname="evc_tests")
-    settings.load(environ.Loader(), failfast=False)
-    errors = settings.validation_errors()
+    settings.load([environ.Loader()], failfast=False)
+    errors = validation_errors(settings)
     assert len(errors) == 2
     assert errors == ['SENTRY_DSN is not defined', 'PORT is not defined']
 
@@ -23,8 +23,8 @@ def test_settings_valid(monkeypatch):
     monkeypatch.setenv("PORT", "123")
 
     settings = Settings(appname="evc_tests")
-    settings.load(environ.Loader())
-    errors = settings.validation_errors()
+    settings.load([environ.Loader()])
+    errors = validation_errors(settings)
     assert len(errors) == 0
     assert settings.SENTRY_DSN == "123"
     assert settings.PORT == 123

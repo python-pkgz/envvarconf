@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from envvarconf import BaseSettings
 from envvarconf.loaders import environ
 
@@ -8,11 +10,14 @@ class Settings(BaseSettings):
 
     HOST: str = "aaaakehgeiuhgiweurhiuerhf"*200
     PORT: int
+    RATE: float
+    AMOUNT: Decimal
 
 
 if __name__ == "__main__":
     settings = Settings()
-    settings.load(loader=environ.Loader())
+    settings.load(loaders=[environ.Loader(), ])
+    settings.print_detailed_settings()
 
     print("OK!")
     print(settings)
