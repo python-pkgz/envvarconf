@@ -1,14 +1,12 @@
-from setuptools import setup  # type: ignore
+from setuptools import setup, find_packages  # type: ignore
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 setup(
     name='envvarconf',
     version=VERSION,
-    packages=[
-        'envvarconf',
-    ],
+    packages=find_packages(),
     url='https://github.com/a1fred/envvarconf',
     license='MIT',
     author='a1fred',
