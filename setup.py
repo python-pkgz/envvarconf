@@ -1,11 +1,11 @@
 from setuptools import setup  # type: ignore
 
-version = '1.0'
+VERSION = '1.0'
 
 
 setup(
     name='envvarconf',
-    version=version,
+    version=VERSION,
     packages=[
         'envvarconf',
     ],
