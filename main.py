@@ -2,11 +2,11 @@ from decimal import Decimal
 
 from envvarconf import BaseSettings
 from envvarconf.loaders import environ
+from envvarconf.mixins.logger import LoggingMixin
 
 
-class Settings(BaseSettings):
+class Settings(LoggingMixin, BaseSettings):
     SENTRY_DSN: str
-    LOGGING_LEVEL: str = 'debug'
 
     HOST: str = "aaaakehgeiuhgiweurhiuerhf"*200
     PORT: int

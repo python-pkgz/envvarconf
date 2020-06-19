@@ -1,6 +1,7 @@
 import sys
 from typing import Optional, List
 
+from envvarconf.inspection import get_settings_variables
 from envvarconf.printing import get_tty_width, truncatestring
 from envvarconf.validation import validate_definition, validation_errors
 
@@ -44,10 +45,10 @@ class BaseSettings:
             truncate_width = get_tty_width()
         print(f"{self.appname or 'Application'} settings:")
 
-        for varname, vartype in self.__annotations__.items():
+        for varname, vartype in get_settings_variables(self).items():
             varval = str(getattr(self, varname, "NOT DEFINED!"))
             print(truncatestring(f"{varname}:{vartype.__name__} = {varval}", width=truncate_width, placeholder="..."))
 
     def __str__(self):
-        vs = [f"{var_name}={getattr(self, var_name, '?')}" for var_name in self.__annotations__.keys()]
+        vs = [f"{var_name}={getattr(self, var_name, '?')}" for var_name in get_settings_variables(self).keys()]
         return f"<{self.__class__.__name__} {', '.join(vs)}>"

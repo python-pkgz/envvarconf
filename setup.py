@@ -1,7 +1,13 @@
 from setuptools import setup, find_packages  # type: ignore
+import itertools
 
-VERSION = '1.1'
+VERSION = '1.2'
 
+
+EXTRAS = {
+    "sentry":  ["sentry_sdk"],
+}
+EXTRAS['all'] = list(itertools.chain(*EXTRAS.values()))
 
 setup(
     name='envvarconf',
@@ -23,5 +29,6 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
+    extras_require=EXTRAS,
     test_suite="tests",
 )
