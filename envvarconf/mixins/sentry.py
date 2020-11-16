@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 class SentryMixin:
     SENTRY_DSN: str = 'TESTING'
 
-    def initialize_sentry(self, integrations=()):
+    def initialize_sentry(self, integrations=(), **kwargs):
         """
         Initialize sentry sdk
         """
@@ -19,4 +19,5 @@ class SentryMixin:
             sentry_sdk.init(
                 dsn=self.SENTRY_DSN,
                 integrations=integrations,
+                **kwargs
             )

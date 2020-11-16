@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages  # type: ignore
 import itertools
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 EXTRAS = {
