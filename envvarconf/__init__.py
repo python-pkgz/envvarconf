@@ -1,11 +1,11 @@
 import sys
-from typing import Optional, List
+from typing import List, Optional
 
+from envvarconf.exceptions import VariableConvertException
 from envvarconf.inspection import get_settings_variables
-from envvarconf.printing import get_tty_width, truncatestring
-from envvarconf.validation import validate_definition, validation_errors
-
 from envvarconf.loaders.base import BaseLoader
+from envvarconf.printing import get_tty_width, truncatestring
+from envvarconf.validation import validate_definition, validate_fields
 
 
 class BaseSettings:
@@ -13,7 +13,7 @@ class BaseSettings:
         self.appname = appname
         validate_definition(self)
 
-    def load(self, loaders: List[BaseLoader], failfast=True, truncate_width: Optional[int] = None):
+    def load(self, loaders: List[BaseLoader], failfast=True, truncate_width: Optional[int] = None) -> List[str]:
         """
         Load settings using `loader`
 
@@ -22,10 +22,16 @@ class BaseSettings:
         :param failfast: If settings is not valid print help then exit, else do nothing
         """
 
-        for loader in loaders:
-            loader.load(self)
+        errors = []
 
-        errors = validation_errors(self)
+        for loader in loaders:
+            try:
+                loader.load(self)
+            except VariableConvertException as ex:
+                errors.append(str(ex))
+
+        errors += validate_fields(self)
+
         if errors:
             print("There is errors in settings")
             print("\n".join([f" * {x}" for x in errors]))
@@ -34,6 +40,8 @@ class BaseSettings:
             if failfast:
                 self.print_detailed_settings(truncate_width=truncate_width)
                 sys.exit(1)
+
+        return errors
 
     def print_detailed_settings(self, truncate_width: Optional[int] = None):
         """

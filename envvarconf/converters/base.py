@@ -4,6 +4,7 @@ ALLOWED_TYPES = [
     str,
     int,
     float,
+    bool,
     Decimal,
 ]
 

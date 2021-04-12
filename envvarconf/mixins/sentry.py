@@ -1,6 +1,6 @@
 import logging
-import sentry_sdk
 
+import sentry_sdk  # type: ignore
 
 logger = logging.getLogger(__name__)
 

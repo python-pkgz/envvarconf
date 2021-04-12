@@ -1,4 +1,4 @@
-from envvarconf import BaseSettings, validation_errors
+from envvarconf import BaseSettings
 from envvarconf.loaders import environ
 
 
@@ -9,13 +9,16 @@ class Settings(BaseSettings):
     HOST: str = "aaaakehgeiuhgiweurhiuerhf"*200
     PORT: int
 
+    DEBUG: bool = False
 
-def test_settings_invalid():
+
+def test_settings_invalid(monkeypatch):
+    monkeypatch.setenv("DEBUG", "off")
+
     settings = Settings(appname="evc_tests")
-    settings.load([environ.Loader()], failfast=False)
-    errors = validation_errors(settings)
-    assert len(errors) == 2
-    assert errors == ['SENTRY_DSN is not defined', 'PORT is not defined']
+    errors = settings.load([environ.Loader()], failfast=False)
+    assert len(errors) == 3
+    assert errors == ["Bad value for boolean field: 'off'", 'SENTRY_DSN is not defined', 'PORT is not defined']
 
 
 def test_settings_valid(monkeypatch):
@@ -23,8 +26,8 @@ def test_settings_valid(monkeypatch):
     monkeypatch.setenv("PORT", "123")
 
     settings = Settings(appname="evc_tests")
-    settings.load([environ.Loader()])
-    errors = validation_errors(settings)
+    errors = settings.load([environ.Loader()])
+
     assert len(errors) == 0
     assert settings.SENTRY_DSN == "123"
     assert settings.PORT == 123

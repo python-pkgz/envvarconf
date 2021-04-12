@@ -15,7 +15,7 @@ def validate_definition(settings):
             raise TypeError(f"Variable {varname} marked {vartype}, that not allowed for settings use")
 
 
-def validation_errors(settings) -> List[str]:
+def validate_fields(settings) -> List[str]:
     """
     Get settings validation_errors
 

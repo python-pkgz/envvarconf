@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 Run application without any environment definition
 ```bash
-$ python3 main.py 
+$ python3 main.py
 There is errors in settings
  * SENTRY_DSN is not defined
  * PORT is not defined
@@ -47,7 +47,7 @@ PORT: <class 'int'> = NOT DEFINED!
 
 Define HOST variable:
 ```bash
-$ HOST=1 python3 main.py 
+$ HOST=1 python3 main.py
 There is errors in settings
  * SENTRY_DSN is not defined
  * PORT is not defined
@@ -62,7 +62,7 @@ PORT: <class 'int'> = NOT DEFINED!
 
 Define all variables
 ```bash
-$ HOST=1 PORT=2 SENTRY_DSN=3 python3 main.py 
+$ HOST=1 PORT=2 SENTRY_DSN=3 python3 main.py
 OK!
 <Settings SENTRY_DSN=3, LOGGING_LEVEL=debug, HOST=1, PORT=2>
 ```
