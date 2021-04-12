@@ -3,5 +3,7 @@
 dist
 *.egg-info
 .idea
+.vscode
+.pytest_cache
 .coverage
 .venv
