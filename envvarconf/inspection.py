@@ -23,6 +23,4 @@ def get_settings_variables(settings: 'BaseSettings') -> Dict[str, Optional[Type]
         if inherited_class != object:
             annotations.update(get_definition_vars(inherited_class))
 
-    print(annotations)
-
     return annotations
