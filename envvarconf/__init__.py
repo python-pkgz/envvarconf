@@ -55,6 +55,7 @@ class BaseSettings:
 
         for varname, vartype in get_settings_variables(self).items():
             varval = str(getattr(self, varname, "NOT DEFINED!"))
+            assert vartype is not None
             print(truncatestring(f"{varname}:{vartype.__name__} = {varval}", width=truncate_width, placeholder="..."))
 
     def __str__(self):

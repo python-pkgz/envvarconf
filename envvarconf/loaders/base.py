@@ -1,7 +1,6 @@
-from typing import Type, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Type
 
-from envvarconf.converters.base import ConverterBase, ALLOWED_TYPES
-
+from envvarconf.converters.base import ALLOWED_TYPES, ConverterBase
 
 if TYPE_CHECKING:
     from envvarconf import BaseSettings

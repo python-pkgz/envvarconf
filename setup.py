@@ -2,7 +2,7 @@ import itertools
 
 from setuptools import find_packages, setup  # type: ignore
 
-VERSION = '1.4'
+VERSION = '1.4.1'
 
 
 EXTRAS = {
